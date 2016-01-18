@@ -129,27 +129,31 @@ var ZGalleryItem = function(input, open, close, next) {
 					.addClass('zslideshow-overlay')
 					.append(
 						slide,
-						$(document.createElement('button'))
-							.addClass('zss-btn zss-btn-prev')
-							.text('<')
-							.on('click', function(e) {
-								e.stopPropagation();
-								prevSlide();
-							}),
-						$(document.createElement('button'))
-							.addClass('zss-btn zss-btn-close')
-							.text('X')
-							.on('click', function(e) {
-								e.stopPropagation();
-								$('.zslideshow-overlay').remove();
-							}),
-						$(document.createElement('button'))
-							.addClass('zss-btn zss-btn-next')
-							.text('>')
-							.on('click', function(e) {
-								e.stopPropagation();
-								nextSlide();
-							})
+						$(document.createElement('div'))
+							.addClass('zss-btn-panel')
+							.append(
+								$(document.createElement('button'))
+									.addClass('zss-btn zss-btn-prev')
+									.text('<')
+									.on('click', function(e) {
+										e.stopPropagation();
+										prevSlide();
+									}),
+								$(document.createElement('button'))
+									.addClass('zss-btn zss-btn-close')
+									.text('X')
+									.on('click', function(e) {
+										e.stopPropagation();
+										$('.zslideshow-overlay').remove();
+									}),
+								$(document.createElement('button'))
+									.addClass('zss-btn zss-btn-next')
+									.text('>')
+									.on('click', function(e) {
+										e.stopPropagation();
+										nextSlide();
+									})
+							)
 					);
 
 		$('body').append(overlay);
