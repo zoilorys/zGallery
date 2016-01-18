@@ -1,3 +1,3 @@
-var manager = new ZGalleryManager('container', inputs);
+var manager = new ZGalleryManager('container');
 
 manager.start();

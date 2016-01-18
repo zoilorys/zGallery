@@ -1,13 +1,40 @@
-var ZGalleryManager = function(container, array) {
+var ZGalleryManager = function(container) {
 	var manager = {},
 			currentEl = null,
 			root = $('#' + container),
-			items = buildElements(array);
+			items = null;
 
 	function buildElements(values) {
 		return values.map(function(item) {
 			return new ZGalleryItem(item, open, close, next);
 		});
+	}
+
+	function parseDOM() {
+		var postElems = root.find('.p-image');
+
+		array = postElems.map(function(index, item) {
+			var result = {};
+
+			result.outerImg = {
+				src: $(item).children('img').attr('src'),
+				alt: $(item).children('img').attr('alt')
+			};
+
+			result.images = $(item).find('.post-images').children().map(function(i, image) {
+				return {
+					src: $(image).attr('src'),
+					alt: $(image).attr('alt')
+				};
+			}).toArray();
+			result.message = $(item).last('p').text();
+
+			return result;
+		}).toArray();
+
+		console.log(array);
+
+		items = buildElements(array);
 	}
 
 	function closeAll() {
@@ -63,6 +90,8 @@ var ZGalleryManager = function(container, array) {
 
 		this.start();
 	}
+
+	parseDOM();
 
 	return manager;
 }

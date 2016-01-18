@@ -6,8 +6,8 @@ var ZGalleryItem = function(input, open, close, next) {
 
 	function initMiniVersion() {
 		min = $(document.createElement('img'))
-			.attr('src', input.images[0].src)
-			.attr('alt', input.images[0].alt)[0];
+			.attr('src', input.outerImg.src)
+			.attr('alt', input.outerImg.alt)[0];
 	}
 
 	function generateControls() {
