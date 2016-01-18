@@ -32,8 +32,6 @@ var ZGalleryManager = function(container) {
 			return result;
 		}).toArray();
 
-		console.log(array);
-
 		items = buildElements(array);
 	}
 
