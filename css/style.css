@@ -1,0 +1,49 @@
+.zgallery {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.zgallery-item {
+	border: 1px solid gray;
+}
+
+.zg-item-retract, .zg-item-next {
+	position: relative;
+	border: 1px solid gray;
+	background: rgba(50,50,50,0.3);
+	left: 25%;
+}
+
+.zg-retracted {
+	width: 200px;
+}
+
+.zg-retracted img {
+	width: 200px;
+}
+
+.zg-expanded {
+	width: 400px;
+	text-align: center;
+}
+
+.zg-expanded img {
+	width: 400px;
+}
+
+.zslideshow-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #404040;
+}
+
+.zslideshow-item {
+	position: relative;
+	margin: 0 auto;
+	width: 60%;
+}
