@@ -27,6 +27,7 @@ var ZGalleryManager = function(container) {
 					alt: $(image).attr('alt')
 				};
 			}).toArray();
+			result.videos = $(item).find('.post-video').children();
 			result.message = $(item).last('p').text();
 
 			return result;
@@ -66,10 +67,6 @@ var ZGalleryManager = function(container) {
 			currentEl = 0
 		}
 		items[currentEl].expand()
-	}
-
-	function openSlideshow() {
-		this.createSlideshow();
 	}
 
 	manager.start = function() {

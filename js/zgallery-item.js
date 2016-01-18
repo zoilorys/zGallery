@@ -32,6 +32,10 @@ var ZGalleryItem = function(input, open, close, next) {
 		});
 	}
 
+	function getElementVideo() {
+		return input.videos;
+	}
+
 	function getElementText() {
 		return $(document.createElement('p'))
 			.text(input.message)[0];
@@ -44,6 +48,9 @@ var ZGalleryItem = function(input, open, close, next) {
 			generateControls()
 				.concat(
 					getElementImages()
+				)
+				.concat(
+					getElementVideo()
 				)
 				.concat(
 					getElementText()
