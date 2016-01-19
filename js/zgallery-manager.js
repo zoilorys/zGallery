@@ -104,35 +104,39 @@ var ZGalleryManager = function(container, options) {
 			for (var i=0; i<elements.length; i++) {
 				var elem = elements[i];
 				if ($(elem).hasClass('zg-expanded')) {
-					expanded = $(elem).data('index');
-					activeRow = $(elem).data('row');
+					expanded = parseInt($(elem).attr('data-index'));
+					activeRow = parseInt($(elem).attr('data-row'));
 				}
 			}
 
-			for(var currentRow = activeRow; currentRow <= rowNum; currentRow++) {
-				elements.filter(function(element) {
-					return $(element).data('row') == currentRow;
-				}).map(function(element, index) {
-					return $(element).attr('data-index', index);
-				}).forEach(function(element, index) {
-					var data = $(element),
-							dataIndex = data.data('index'),
-							dataRow = data.data('row');
-
-					if (dataRow == activeRow && dataIndex > expanded) {
-						data
-							.attr('data-index', dataIndex + 2)
-							.css('left', getLeftOffset(dataIndex + 2, whiteSpace, g, ew));
-					} else if (dataRow > activeRow && dataIndex >= expanded) {
-						data
-							.attr('data-index', dataIndex + 3)
-							.css('left', getLeftOffset(dataIndex + 3, whiteSpace, g, ew));
-					}
-					if (data.data('index') >= numPerRow) {
-						data.attr('data-row', data.data('row') + 1);
-					}
+			for (var j = 1; j <= rowNum + 5; j++) {
+				var filteredRow = elements.filter(function(item) {
+					return parseInt($(item).attr('data-row')) === j;
 				});
-			}
+
+				for (var z = 0; z < filteredRow.length; z++) {
+					var elemz = $(filteredRow[z]);
+					elemz.attr('data-index', z);
+
+					if (j === activeRow && z > expanded) {
+						elemz
+							.attr('data-index', z + 2)
+							.css('left', getLeftOffset(z + 2, whiteSpace, g, ew));
+					} else if (j > activeRow && z >= expanded) {
+						elemz
+							.attr('data-index', z + 3)
+							.css('left', getLeftOffset(z + 3, whiteSpace, g, ew));
+					} else {
+						elemz
+							.css('left', getLeftOffset(z, whiteSpace, g, ew));
+					}
+					var newIndex = parseInt(elemz.attr('data-index'));
+					if (newIndex >= numPerRow) {
+						elemz.attr('data-row', j + 1)
+							.css('top', getTopOffset(j + 1, g, eh));
+					}
+				}
+			};
 		}
 	}
 
