@@ -1,6 +1,5 @@
 var ZGalleryItem = function(input, open, close, next) {
-	var itemCtrl = {},
-			el = document.createElement('div'),
+	var el = document.createElement('div'),
 			min = null,
 			expanded = null;
 

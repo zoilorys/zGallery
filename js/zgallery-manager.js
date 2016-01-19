@@ -1,5 +1,6 @@
-var ZGalleryManager = function(container) {
+var ZGalleryManager = function(container, options) {
 	var manager = {},
+			opts = options || {},
 			currentEl = null,
 			root = $('#' + container),
 			items = null;
@@ -34,6 +35,105 @@ var ZGalleryManager = function(container) {
 		}).toArray();
 
 		items = buildElements(array);
+
+		calculatePosition(items);
+	}
+
+	function hasExpanded(elements) {
+		return elements.some(function(element) {
+			return $(element).hasClass('zg-expanded');
+		})
+	}
+
+	function getRow(index, numPerRow) {
+		var num = index + 1,
+				value = numPerRow - num;
+
+		if (value >= 0) {
+			return {
+				num: 1,
+				index: index
+			};
+		} else {
+			var row = Math.ceil(Math.abs(value)/numPerRow) + 1,
+					inRowIndex = (num - (row - 1) * numPerRow) - 1;
+			return {
+				num: row,
+				index: inRowIndex
+			};
+		}
+	}
+
+	function resetIndices(elements, numPerRow, gap, ew, eh, ws) {
+		elements.forEach(function(element, index) {
+			var row = getRow(index, numPerRow);
+			$(element)
+				.attr('data-row', row.num)
+				.attr('data-index', row.index)
+				.attr('data-left', getLeftOffset(row.index, ws, gap, ew))
+				.attr('data-top', getTopOffset(row.num, gap, eh))
+				.css('left', getLeftOffset(row.index, ws, gap, ew))
+				.css('top', getTopOffset(row.num, gap, eh));
+		});
+	}
+
+	function getLeftOffset(index, whitespace, gap, width) {
+		return whitespace + index * (width + gap);
+	}
+
+	function getTopOffset(row, gap, height) {
+		return (row - 1) * (gap + height);
+	}
+
+	function calculatePosition(elements) {
+		var cw = root.width(), // container width
+				ew = opts.width || 200, // element width
+				eh = opts.height || 200, // element height
+				g = opts.gap || 30; // gap
+
+		var numPerRow = Math.floor(cw/(ew+g)),
+				whiteSpace = (cw - (ew * numPerRow + g * (numPerRow - 1)))/2,
+				rowNum = Math.ceil(elements.length/numPerRow);
+
+		resetIndices(elements, numPerRow, g, ew, eh, whiteSpace);
+
+		if (hasExpanded(elements)) {
+			var expanded = 0,
+					activeRow = 0;
+
+			for (var i=0; i<elements.length; i++) {
+				var elem = elements[i];
+				if ($(elem).hasClass('zg-expanded')) {
+					expanded = $(elem).data('index');
+					activeRow = $(elem).data('row');
+				}
+			}
+
+			for(var currentRow = activeRow; currentRow <= rowNum; currentRow++) {
+				elements.filter(function(element) {
+					return $(element).data('row') == currentRow;
+				}).map(function(element, index) {
+					return $(element).attr('data-index', index);
+				}).forEach(function(element, index) {
+					var data = $(element),
+							dataIndex = data.data('index'),
+							dataRow = data.data('row');
+
+					if (dataRow == activeRow && dataIndex > expanded) {
+						data
+							.attr('data-index', dataIndex + 2)
+							.css('left', getLeftOffset(dataIndex + 2, whiteSpace, g, ew));
+					} else if (dataRow > activeRow && dataIndex >= expanded) {
+						data
+							.attr('data-index', dataIndex + 3)
+							.css('left', getLeftOffset(dataIndex + 3, whiteSpace, g, ew));
+					}
+					if (data.data('index') >= numPerRow) {
+						data.attr('data-row', data.data('row') + 1);
+					}
+				});
+			}
+		}
 	}
 
 	function closeAll() {
@@ -54,10 +154,12 @@ var ZGalleryManager = function(container) {
 		closeAll();
 		markAsCurrent(this);
 		this.expand();
+		calculatePosition(items);
 	}
 
 	function close() {
 		this.retract();
+		calculatePosition(items);
 	}
 
 	function next() {
@@ -67,6 +169,7 @@ var ZGalleryManager = function(container) {
 			currentEl = 0
 		}
 		items[currentEl].expand()
+		calculatePosition(items);
 	}
 
 	manager.start = function() {
@@ -87,6 +190,10 @@ var ZGalleryManager = function(container) {
 	}
 
 	parseDOM();
+
+	$(window).resize(function() {
+		calculatePosition(items);
+	});
 
 	return manager;
 }
