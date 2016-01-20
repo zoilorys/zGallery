@@ -119,9 +119,18 @@ var ZGalleryManager = function(container, options) {
 					elemz.attr('data-index', z);
 
 					if (j === activeRow && z > expanded) {
-						elemz
-							.attr('data-index', z + 2)
-							.css('left', getLeftOffset(z + 2, whiteSpace, g, ew));
+						if (elemz.hasClass('zg-expanded') && z === numPerRow - 1) {
+							elemz
+								.attr('data-index', 0)
+								.attr('data-row', j + 1);
+
+							activeRow = j + 1;
+							expanded = 0;
+						} else {
+							elemz
+								.attr('data-index', z + 2)
+								.css('left', getLeftOffset(z + 2, whiteSpace, g, ew));
+						}
 					} else if (j > activeRow && z >= expanded) {
 						elemz
 							.attr('data-index', z + 3)
