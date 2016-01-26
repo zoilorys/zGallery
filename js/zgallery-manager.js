@@ -179,6 +179,7 @@ var ZGalleryManager = function(container, options) {
 
 	function close() {
 		this.retract();
+		root.attr('height', 'auto');
 		calculatePosition(items);
 	}
 
