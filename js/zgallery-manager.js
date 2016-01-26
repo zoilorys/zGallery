@@ -195,10 +195,11 @@ var ZGalleryManager = function(container, options) {
 	}
 
 	manager.start = function() {
-		root.empty().append.apply(root, items);
 		if (window.location.search === "?latest") {
 			items[items.length - 1].expand();
 		}
+		root.empty().append.apply(root, items);
+		calculatePosition(items);
 	}
 
 	manager.reset = function(newArray) {
