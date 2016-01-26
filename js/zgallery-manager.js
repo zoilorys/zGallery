@@ -153,6 +153,8 @@ var ZGalleryManager = function(container, options) {
 			var anchor = $('.zg-expanded'),
 					newH = anchor.height() + parseInt(anchor.attr('data-row')) * eh;
 			root.css('height', newH);
+		} else {
+			root.css('height', rowNum * (eh + g));
 		}
 	}
 
@@ -179,7 +181,6 @@ var ZGalleryManager = function(container, options) {
 
 	function close() {
 		this.retract();
-		root.attr('height', 'auto');
 		calculatePosition(items);
 	}
 
