@@ -150,8 +150,10 @@ var ZGalleryManager = function(container, options) {
 				}
 			}
 
-			var anchor = $('.zg-expanded'),
-					newH = anchor.height() + parseInt(anchor.attr('data-row')) * eh;
+			var anchor = $('.zg-expanded');
+			var expandedH = anchor.height() + parseInt(anchor.attr('data-row')) * eh;
+			var rowsH = parseInt($(items[items.length - 1]).attr('data-row')) * (eh + g);
+			var newH = expandedH > rowsH ? expandedH : rowsH;
 			root.css('height', newH);
 		} else {
 			root.css('height', rowNum * (eh + g));
