@@ -118,19 +118,18 @@ var ZGalleryManager = function(container, options) {
 					var elemz = $(filteredRow[z]);
 					elemz.attr('data-index', z);
 
-					if (j === activeRow && z > expanded) {
-						if (elemz.hasClass('zg-expanded') && z === numPerRow - 1) {
-							elemz
-								.attr('data-index', 0)
-								.attr('data-row', j + 1);
+					if (elemz.hasClass('zg-expanded') && z === numPerRow - 1) {
+						elemz
+							.attr('data-index', 0)
+							.attr('data-row', j + 1)
+							.css('top', getTopOffset(j + 1, g, eh));
 
-							activeRow = j + 1;
-							expanded = 0;
-						} else {
-							elemz
-								.attr('data-index', z + 2)
-								.css('left', getLeftOffset(z + 2, whiteSpace, g, ew));
-						}
+						activeRow = j + 1;
+						expanded = 0;
+					} else if (j === activeRow && z > expanded) {
+						elemz
+							.attr('data-index', z + 2)
+							.css('left', getLeftOffset(z + 2, whiteSpace, g, ew));
 					} else if (j > activeRow && z >= expanded) {
 						elemz
 							.attr('data-index', z + 3)
@@ -145,7 +144,11 @@ var ZGalleryManager = function(container, options) {
 							.css('top', getTopOffset(j + 1, g, eh));
 					}
 				}
-			};
+			}
+
+			var anchor = $('.zg-expanded'),
+					newH = anchor.height() + parseInt(anchor.attr('data-row')) * eh;
+			root.css('height', newH);
 		}
 	}
 
