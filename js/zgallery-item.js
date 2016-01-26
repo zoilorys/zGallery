@@ -4,9 +4,13 @@ var ZGalleryItem = function(input, open, close, next) {
 			expanded = null;
 
 	function initMiniVersion() {
-		min = $(document.createElement('img'))
-			.attr('src', input.outerImg.src)
-			.attr('alt', input.outerImg.alt)[0];
+		if (input.outerImg) {
+			min = $(document.createElement('img'))
+				.attr('src', input.outerImg.src)
+				.attr('alt', input.outerImg.alt)[0];
+		} else if (input.outerVideo) {
+			min = input.outerVideo
+		}
 	}
 
 	function generateControls() {

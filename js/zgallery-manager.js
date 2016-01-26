@@ -17,10 +17,14 @@ var ZGalleryManager = function(container, options) {
 		array = postElems.map(function(index, item) {
 			var result = {};
 
-			result.outerImg = {
-				src: $(item).children('img').attr('src'),
-				alt: $(item).children('img').attr('alt')
-			};
+			if ($(item).children('img').length > 0) {
+				result.outerImg = {
+					src: $(item).children('img').attr('src'),
+					alt: $(item).children('img').attr('alt')
+				};
+			} else if ($(item).children('video').length > 0) {
+				result.outerVideo = $(item).children('video');
+			}
 
 			result.images = $(item).find('.post-images').children().map(function(i, image) {
 				return {
@@ -190,6 +194,9 @@ var ZGalleryManager = function(container, options) {
 
 	manager.start = function() {
 		root.empty().append.apply(root, items);
+		if (window.location.search === "?latest") {
+			items[items.length - 1].expand();
+		}
 	}
 
 	manager.reset = function(newArray) {
