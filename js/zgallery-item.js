@@ -15,11 +15,9 @@ var ZGalleryItem = function(input, open, close, next) {
 
 	function generateControls() {
 		var closeButton = $(document.createElement('button'))
-					.addClass('zg-item-retract')
-					.text('X')[0],
+					.addClass('zg-item-retract')[0],
 				nextButton = $(document.createElement('button'))
-					.addClass('zg-item-next')
-					.text('->')[0];
+					.addClass('zg-item-next')[0];
 		return [
 			closeButton,
 			nextButton
