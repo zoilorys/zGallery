@@ -38,7 +38,9 @@ var ZGalleryItem = function(input, open, close, next) {
 	}
 
 	function getPhotographer() {
-		return input.photographer;
+		return $(document.createElement('h4'))
+			.addClass('photo-by')
+			.text(input.photographer);
 	}
 
 	function getElementText() {

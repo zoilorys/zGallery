@@ -33,9 +33,8 @@ var ZGalleryManager = function(container, options) {
 				};
 			}).toArray();
 			result.videos = $(item).find('.post-video').children();
-			result.message = $(item).last('p').text();
-			result.photographer = $(item).find('h4.photo-by');
-
+			result.photographer = $(item).find('h4.photo-by').text();
+			result.message = $(item).children('p').text().replace("(" + result.photographer + ")", "");
 			return result;
 		}).toArray();
 
