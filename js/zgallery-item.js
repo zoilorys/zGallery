@@ -37,6 +37,10 @@ var ZGalleryItem = function(input, open, close, next) {
 		return input.videos;
 	}
 
+	function getPhotographer() {
+		return input.photographer;
+	}
+
 	function getElementText() {
 		return $(document.createElement('p'))
 			.text(input.message)[0];
@@ -55,6 +59,9 @@ var ZGalleryItem = function(input, open, close, next) {
 				)
 				.concat(
 					getElementText()
+				)
+				.concat(
+					getPhotographer()
 				)
 		);
 	}

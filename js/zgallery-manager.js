@@ -34,6 +34,7 @@ var ZGalleryManager = function(container, options) {
 			}).toArray();
 			result.videos = $(item).find('.post-video').children();
 			result.message = $(item).last('p').text();
+			result.photographer = $(item).find('h4.photo-by');
 
 			return result;
 		}).toArray();
