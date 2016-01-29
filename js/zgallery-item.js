@@ -3,13 +3,24 @@ var ZGalleryItem = function(input, open, close, next) {
 			min = null,
 			expanded = null;
 
+	function getElementOverlay() {
+		return input.overlay;
+	}
+
 	function initMiniVersion() {
 		if (input.outerImg) {
-			min = $(document.createElement('img'))
-				.attr('src', input.outerImg.src)
-				.attr('alt', input.outerImg.alt)[0];
+			min = [
+				$(document.createElement('img'))
+					.attr('src', input.outerImg.src)
+					.attr('alt', input.outerImg.alt)[0]
+				,
+				getElementOverlay()
+			];
 		} else if (input.outerVideo) {
-			min = input.outerVideo
+			min = [
+				input.outerVideo,
+				getElementOverlay()
+			];
 		}
 	}
 
@@ -36,6 +47,7 @@ var ZGalleryItem = function(input, open, close, next) {
 	function getElementVideo() {
 		return input.videos;
 	}
+
 
 	function getPhotographer() {
 		return $(document.createElement('h4'))
@@ -78,8 +90,9 @@ var ZGalleryItem = function(input, open, close, next) {
 	function retractElement() {
 		$(el).removeClass('zg-expanded')
 			.addClass('zg-retracted')
-			.off().empty().append(min)
-			.on('click', function(e) {
+			.off().empty().append.apply($(el), min);
+
+		$(el).on('click', function(e) {
 				e.stopPropagation();
 				open.call(el)
 			});

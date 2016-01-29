@@ -32,6 +32,7 @@ var ZGalleryManager = function(container, options) {
 					alt: $(image).attr('alt')
 				};
 			}).toArray();
+			result.overlay = $(item).find('.overlay');
 			result.videos = $(item).find('.post-video').children();
 			result.photographer = $(item).find('h4.photo-by').text();
 			result.message = $(item).children('p').text().replace("(" + result.photographer + ")", "");
