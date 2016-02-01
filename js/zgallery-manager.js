@@ -156,6 +156,7 @@ var ZGalleryManager = function(container, options) {
 			var rowsH = parseInt($(items[items.length - 1]).attr('data-row')) * (eh + g);
 			var newH = expandedH > rowsH ? expandedH : rowsH;
 			root.css('height', newH);
+
 		} else {
 			root.css('height', rowNum * (eh + g));
 		}
@@ -200,6 +201,9 @@ var ZGalleryManager = function(container, options) {
 	manager.start = function() {
 		if (window.location.search === "?latest") {
 			items[items.length - 1].expand();
+			setTimeout(function() {
+				window.scroll(0, $(items[items.length - 1]).offset().top - $('body').offset().top);
+			}, 25);
 		}
 		root.empty().append.apply(root, items);
 		calculatePosition(items);

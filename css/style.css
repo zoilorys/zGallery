@@ -5,6 +5,10 @@
 	justify-content: center;*/
 }
 
+#container {
+	position: relative;
+}
+
 .zgallery-item {
 	border: 1px solid gray;
 	position:absolute;
