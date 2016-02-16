@@ -200,7 +200,6 @@ var ZGalleryManager = function(container, options) {
 
 	manager.start = function() {
 		if (window.location.search === "?latest") {
-			items[items.length - 1].expand();
 			setTimeout(function() {
 				window.scroll(0, $(items[items.length - 1]).offset().top - $('body').offset().top);
 			}, 25);
